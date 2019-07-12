@@ -28,34 +28,43 @@ const theme = {
       },
   
   },
+
+  TextComposer: {
+    css: {
+
+    },
+  },
 }
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ maxWidth: '80%', height: '100%' }}>
-      <MessageList active>
-        <MessageGroup isOwn={true}>
-        <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
-        <MessageText>
-          I love them
-          soooooooooooo
-          much!
-        </MessageText>
-      </Message>
-      </MessageGroup>
+      <div style={{ maxWidth: '80%', height: '100%'}}>
+      <div style={{overflow: 'auto', height: '550px'}}>
+        <MessageList active>
+          <MessageGroup isOwn={true}>
+          <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
+          <MessageText>
+            I love them
+            soooooooooooo
+            much!
+          </MessageText>
+        </Message>
+        </MessageGroup>
 
 
-        <MessageGroup>
-        <Message date="21:38"  authorName="Visitor" radiusType='single'>
-        <MessageText>
-          I love them
-          soooooooooooo
-          much!
-        </MessageText>
-      </Message>
-      </MessageGroup>
-      </MessageList>
-      <TextComposer >
+          <MessageGroup>
+          <Message date="21:38"  authorName="Visitor" radiusType='single'>
+          <MessageText>
+            I love them
+            soooooooooooo
+            much!
+          </MessageText>
+        </Message>
+        </MessageGroup>
+        </MessageList>
+      </div>
+      <div style={{marginTop: '20px'}}>
+      <TextComposer>
         <Row align="center">
           <IconButton fit>
             <AddIcon />
@@ -67,6 +76,7 @@ function App() {
           <SendButton fit />
         </Row>
       </TextComposer>
+      </div>
       </div>
     </ThemeProvider>
 
