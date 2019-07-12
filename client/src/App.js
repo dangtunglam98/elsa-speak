@@ -28,6 +28,12 @@ const theme = {
       },
   
   },
+
+  TextComposer: {
+    css: {
+
+    },
+  },
 }
 class App extends Component {
   state = { userInput: '', userSentence: [], botSentence: []};
@@ -37,21 +43,24 @@ class App extends Component {
     this.setState({ userInput: event.target.value})
   };
 
+  
+
 
   render(){
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ maxWidth: '80%', height: '100%' }}>
-      <MessageList active>
-        <MessageGroup isOwn={true}>
-        <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
-        <MessageText>
-          I love them
-          soooooooooooo
-          much!
-        </MessageText>
-      </Message>
-      </MessageGroup>
+      <div style={{ maxWidth: '80%', height: '100%'}}>
+      <div style={{overflow: 'auto', height: '550px'}}>
+        <MessageList active>
+          <MessageGroup isOwn={true}>
+          <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
+          <MessageText>
+            I love them
+            soooooooooooo
+            much!
+          </MessageText>
+        </Message>
+        </MessageGroup>
 
 
         <MessageGroup>
@@ -76,6 +85,7 @@ class App extends Component {
           <SendButton fit />
         </Row>
       </TextComposer>
+      </div>
       </div>
     </ThemeProvider>
 
