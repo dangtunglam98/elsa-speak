@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { ThemeProvider, MessageList , MessageGroup, Message, MessageText , FixedWrapper , TextComposer, Row, IconButton, EmojiIcon, SendButton, AddIcon, TextInput } from '@livechat/ui-kit'
-
+import { textInput } from './API_query';
 const theme = {
   vars: {
       'primary-color': '#427fe1',
@@ -43,7 +43,11 @@ class App extends Component {
     this.setState({ userInput: event.target.value})
   };
 
-  
+  submitClicked = () => {
+    textInput(this.state.userInput)
+    var joinedInput = this.state.userSentence.concat(this.state.userInput);
+    this.setState({userSentence: joinedInput})
+  }
 
 
   render(){
@@ -62,18 +66,23 @@ class App extends Component {
         </Message>
         </MessageGroup>
 
+        {
+          this.state.userSentence.map((input) =>
+            <MessageGroup isOwn={true}>
+            <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
+            <MessageText>
+              {input}
+            </MessageText>
+            </Message>
+            </MessageGroup> 
+          )
+        }
+        </MessageList>
 
-        <MessageGroup>
-        <Message date="21:38"  authorName="Visitor" radiusType='single'>
-        <MessageText>
-          I love them
-          soooooooooooo
-          much!
-        </MessageText>
-      </Message>
-      </MessageGroup>
-      </MessageList>
-      <TextComposer onChange={this.updateInput} value={this.state.userInput}>
+      </div>
+      
+      <div style={{marginTop: '20px'}}>
+      <TextComposer onChange={this.updateInput} onSend={this.submitClicked}>
         <Row align="center">
           <IconButton fit>
             <AddIcon />
@@ -82,7 +91,7 @@ class App extends Component {
             <i className="fa fa-microphone fa-lg"></i>
           </IconButton>
           <TextInput />
-          <SendButton fit />
+          <SendButton fit  />
         </Row>
       </TextComposer>
       </div>
