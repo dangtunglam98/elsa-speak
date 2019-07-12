@@ -63,6 +63,7 @@ function App() {
         </MessageGroup>
         </MessageList>
       </div>
+      
       <div style={{marginTop: '20px'}}>
       <TextComposer>
         <Row align="center">
