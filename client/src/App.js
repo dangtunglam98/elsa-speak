@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { ThemeProvider, MessageList , MessageGroup, Message, MessageText , FixedWrapper , TextComposer, Row, IconButton, EmojiIcon, SendButton, AddIcon, TextInput } from '@livechat/ui-kit'
@@ -29,7 +29,16 @@ const theme = {
   
   },
 }
-function App() {
+class App extends Component {
+  state = { userInput: '', userSentence: [], botSentence: []};
+  
+  updateInput = event => {
+    console.log('event.target.value', event.target.value);
+    this.setState({ userInput: event.target.value})
+  };
+
+
+  render(){
   return (
     <ThemeProvider theme={theme}>
       <div style={{ maxWidth: '80%', height: '100%' }}>
@@ -55,15 +64,15 @@ function App() {
       </Message>
       </MessageGroup>
       </MessageList>
-      <TextComposer >
+      <TextComposer onChange={this.updateInput} value={this.state.userInput}>
         <Row align="center">
           <IconButton fit>
             <AddIcon />
           </IconButton>
           <IconButton fit>
-            <i class="fa fa-microphone fa-lg"></i>
+            <i className="fa fa-microphone fa-lg"></i>
           </IconButton>
-          <TextInput fill />
+          <TextInput />
           <SendButton fit />
         </Row>
       </TextComposer>
@@ -78,5 +87,5 @@ function App() {
     
   );
 }
-
+}
 export default App;
