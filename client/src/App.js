@@ -60,14 +60,11 @@ function App() {
           <IconButton fit>
             <AddIcon />
           </IconButton>
+          <IconButton fit>
+            <i class="fa fa-microphone fa-lg"></i>
+          </IconButton>
           <TextInput fill />
           <SendButton fit />
-        </Row>
-
-        <Row verticalAlign="center" justify="right">
-          <IconButton fit>
-            <EmojiIcon />
-          </IconButton>
         </Row>
       </TextComposer>
       </div>
