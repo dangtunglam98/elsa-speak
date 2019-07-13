@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { ThemeProvider, MessageList , MessageGroup, Message, MessageText , FixedWrapper , TextComposer, Row, IconButton, EmojiIcon, SendButton, AddIcon, TextInput } from '@livechat/ui-kit'
+import { ThemeProvider, MessageList , MessageGroup, Message, MessageText , FixedWrapper , TextComposer, Row, IconButton, EmojiIcon, SendButton, AddIcon, TextInput, MessageButtons, MessageButton } from '@livechat/ui-kit'
 import { textInput } from './API_query';
+import {ReactMic} from 'react-mic';
 const theme = {
   vars: {
       'primary-color': '#427fe1',
@@ -23,7 +24,8 @@ const theme = {
       css: {
           fontWeight: 'bold',
           backgroundColor: 'lightblue',
-          borderRadius: '10px'
+          borderRadius: '10px',
+          textCenter: true,
 
       },
   
@@ -36,19 +38,47 @@ const theme = {
   },
 }
 class App extends Component {
-  state = { userInput: '', userSentence: [], botSentence: []};
+  state = { userInput: '', userSentence: [], correctSentence: [], errorIdentify: [], record: false };
+
+  startRecording = () => {
+    this.setState({record: true})
+  }
+
+  stopRecording = () => {
+    this.setState({record: false})
+  }
+
+  onData(recordedBlob) {
+    console.log('chunk of real-time data is: ', recordedBlob);
+  }
+
+  onStop(recordedBlob) {
+    console.log('recordedBlob is: ', recordedBlob);
+  }
+
   
+  toggleIcon = (e) => {
+    e.classList.toggle('fa fa-microphone-slash fa-lg')
+  }
+
   updateInput = event => {
     console.log('event.target.value', event.target.value);
     this.setState({ userInput: event.target.value})
   };
 
-  submitClicked = () => {
-    textInput(this.state.userInput)
+  submitClicked = async () => {
+    var [textOutput, errorCatch] = await textInput(this.state.userInput)
+    // var errorCatch = [errorCatch]
+    // console.log(erroListrCatch)
     var joinedInput = this.state.userSentence.concat(this.state.userInput);
+    var joinedOutput = this.state.correctSentence.concat(textOutput.data.results.afterChange)
+    var joinedError = this.state.errorIdentify.concat([errorCatch])
+    // console.log(joinedOutput)
     this.setState({userSentence: joinedInput})
+    this.setState({correctSentence : joinedOutput})
+    this.setState({errorIdentify: joinedError})
+    // console.log(this.state.errorIdentify)
   }
-
 
   render(){
   return (
@@ -67,14 +97,28 @@ class App extends Component {
         </MessageGroup>
 
         {
-          this.state.userSentence.map((input) =>
+          this.state.userSentence.map((input, output) =>
+          <div>
             <MessageGroup isOwn={true}>
-            <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
+            <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single' fit>
             <MessageText>
               {input}
             </MessageText>
             </Message>
             </MessageGroup> 
+            
+            <MessageGroup>
+            <Message date="21:38" authorName="Bot" radiusType='single'>
+            <MessageText>
+              {this.state.correctSentence[output]}
+            </MessageText>
+            <MessageButtons> 
+            <MessageButton label='hello' />
+            {console.log(this.state.errorIdentify[output])}
+            </MessageButtons>
+            </Message>
+            </MessageGroup> 
+          </div>
           )
         }
         </MessageList>
@@ -88,7 +132,17 @@ class App extends Component {
             <AddIcon />
           </IconButton>
           <IconButton fit>
-            <i className="fa fa-microphone fa-lg"></i>
+            <i onClick={this.startRecording} className="fa fa-microphone fa-lg"></i>
+          </IconButton>
+          <ReactMic
+            record={this.state.record}
+            className="sound-wave"
+            onStop={this.onStop}
+            onData={this.onData}
+            strokeColor="#000000"
+            backgroundColor="#FF4081" />
+          <IconButton>
+          <i onClick={this.stopRecording} className="fa fa-microphone-slash fa-lg"></i>
           </IconButton>
           <TextInput />
           <SendButton fit  />
