@@ -86,38 +86,55 @@ class App extends Component {
       <div style={{ maxWidth: '80%', height: '100%'}}>
       <div style={{overflow: 'auto', height: '550px'}}>
         <MessageList active>
-          <MessageGroup isOwn={true}>
-          <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
-          <MessageText>
-            I love them
-            soooooooooooo
-            much!
-          </MessageText>
-        </Message>
-        </MessageGroup>
+          <div className='col-lg-12' style={{ float: 'left' }}>
+            <div className='col-lg-4' style={{ float: 'left' }}></div>
+            <div className='col-lg-8' style={{ float: 'right', width: 'initial' }}>
+              <MessageGroup isOwn={true}>
+                <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single'>
+                  <MessageText>
+                    I love them
+                    soooooooooooo
+                    much!
+                  </MessageText>
+              </Message>
+            </MessageGroup>  
+            </div>
+          </div>
+
 
         {
           this.state.userSentence.map((input, output) =>
-          <div>
-            <MessageGroup isOwn={true}>
-            <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single' fit>
-            <MessageText>
-              {input}
-            </MessageText>
-            </Message>
-            </MessageGroup> 
+          <div className='col-lg-12'>
+            <div className='col-lg-12' style={{ float: 'left' }}>
+            <div className='col-lg-4' style={{ float: 'left' }}></div>
+              <div className='col-lg-8' style={{ float: 'right', width: 'initial' }}>
+                <MessageGroup isOwn={true}>
+                    <Message date="21:38" isOwn={true} authorName="Visitor" radiusType='single' fit>
+                      <MessageText>
+                        {input}
+                      </MessageText>
+                    </Message>
+                  </MessageGroup> 
+              </div>
+            </div>
             
-            <MessageGroup>
-            <Message date="21:38" authorName="Bot" radiusType='single'>
-            <MessageText>
-              {this.state.correctSentence[output]}
-            </MessageText>
-            <MessageButtons> 
-            <MessageButton label='hello' />
-            {console.log(this.state.errorIdentify[output])}
-            </MessageButtons>
-            </Message>
-            </MessageGroup> 
+            <div className='col-lg-12' style={{ float: 'left' }}>
+                <div className='col-lg-8' style= {{float: 'left', width:'initial'}}>
+                  <MessageGroup>
+                    <Message date="21:38" authorName="Bot" radiusType='single'>
+                      <MessageText>
+                        {this.state.correctSentence[output]}
+                      </MessageText>
+                      <MessageButtons> 
+                      <MessageButton label='hello' />
+                      {console.log(this.state.errorIdentify[output])}
+                      </MessageButtons>
+                    </Message>
+                  </MessageGroup> 
+                </div>
+                <div className='col-lg-4' style={{ float: 'left' }}></div>
+            </div>
+            
           </div>
           )
         }
